@@ -1,29 +1,33 @@
-import { ForwardedRef, forwardRef } from "react";
+import { ForwardedRef, ReactNode, forwardRef } from "react";
 import { createPortal } from "react-dom";
+import Title from "./Title";
+import Content from "./Content";
+import Button from "./Button";
 
 type BottomSheetProps = {
+  children?: ReactNode;
   isOpen: boolean;
-  title: string;
-  content: string;
-  onClickButton: () => void;
-  buttonContent: string;
 };
 
-const BottomSheet = forwardRef(
+const BottomSheetMain = forwardRef(
   (
-    { isOpen, title, content, onClickButton, buttonContent }: BottomSheetProps,
+    { children, isOpen }: BottomSheetProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     if (!isOpen) return null;
     return createPortal(
       <div className="bottom-sheet" ref={ref}>
-        <div className="bottom-sheet-title">{title}</div>
-        <div className="bottom-sheet-content">{content}</div>
-        <button onClick={onClickButton}>{buttonContent}</button>
+        {children}
       </div>,
       document.body
     );
   }
 );
+
+const BottomSheet = Object.assign(BottomSheetMain, {
+  Title: Title,
+  Content: Content,
+  Button: Button,
+});
 
 export default BottomSheet;

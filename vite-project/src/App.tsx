@@ -2,8 +2,8 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import BottomSheet from "./component/BottomSheet";
 import useClickAway from "./hooks/useClickAway";
+import BottomSheet from "./component/BottomSheet";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +13,9 @@ function App() {
 
   const handleOpenModal = () => {
     if (!isOpen) setIsOpen(true);
+  };
+  const handleButton = () => {
+    console.log("안녕");
   };
 
   return (
@@ -34,16 +37,13 @@ function App() {
         <button onClick={handleOpenModal}>Open the BottomSheet</button>
       </div>
 
-      <BottomSheet
-        ref={ref}
-        isOpen={isOpen}
-        title="제목"
-        content="본문 내용"
-        buttonContent="확인"
-        onClickButton={() => {
-          console.log("click");
-        }}
-      ></BottomSheet>
+      <BottomSheet isOpen={isOpen} ref={ref}>
+        <BottomSheet.Title>타이틀</BottomSheet.Title>
+        <BottomSheet.Content>본문</BottomSheet.Content>
+        <BottomSheet.Button onClickButton={handleButton}>
+          클릭
+        </BottomSheet.Button>
+      </BottomSheet>
     </>
   );
 }
