@@ -2,48 +2,38 @@ import {
   Dispatch,
   PropsWithChildren,
   SetStateAction,
-  createContext,
   useContext,
-  useEffect,
   useMemo,
   useState,
-  useRef,
 } from "react";
+import { createContext } from "use-context-selector";
 
-const CounterContext = createContext<null | {
+type MyContextType = {
   count: number;
   setCount: Dispatch<SetStateAction<number>>;
-}>(null);
-
-export const CounterProvider = ({ children }: PropsWithChildren) => {
-  const [count, setCount] = useState(0);
-
-  const previousValueRef = useRef<{
-    count: number;
-    setCount: Dispatch<SetStateAction<number>>;
-  } | null>(null);
-
-  const value = useMemo(() => ({ count, setCount }), [count]);
-  //   const value = { count, setCount };
-
-  useEffect(() => {
-    if (previousValueRef.current) {
-      const isSameValue = value === previousValueRef.current;
-      console.log("isSameValue", isSameValue);
-    }
-    previousValueRef.current = value;
-  });
-
-  return (
-    <CounterContext.Provider value={value}>{children}</CounterContext.Provider>
-  );
+  name: string;
+  setName: Dispatch<SetStateAction<string>>;
 };
 
-export const useCounterContext = () => {
-  const value = useContext(CounterContext);
+export const MyContext = createContext<MyContextType | null>(null);
+
+export const MyContextProvider = ({ children }: PropsWithChildren) => {
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState("Alice");
+
+  const value = useMemo(
+    () => ({ count, setCount, name, setName }),
+    [count, name]
+  );
+
+  return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
+};
+
+export const useMyContextContext = () => {
+  const value = useContext(MyContext);
   if (value == null) {
     throw new Error(
-      "useCounterContext is only available within CounterProvider."
+      "useMyContextContext is only available within MyContextProvider."
     );
   }
 
