@@ -13,12 +13,13 @@ const OverlayKit = () => {
   console.log(data);
 
   const openFooConfirmDialog = () => {
-    return overlay.open(({ isOpen, close, unmount }) => (
+    return overlay.open(({ isOpen, unmount }) => (
       <Dialog
         isOpen={isOpen}
         onClose={() => {
-          close();
+          unmount();
         }}
+        title="overlay-kit모달"
       />
     ));
   };

@@ -16,6 +16,7 @@ const SlashOverlay = () => {
         onClose={() => {
           close();
         }}
+        title="useOverlay모달"
       />
     ));
   };
