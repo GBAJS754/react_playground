@@ -1,8 +1,13 @@
 import { useOverlay } from "@toss/use-overlay";
 import Dialog from "./Dialog";
+import { useEffect } from "react";
 
 const SlashOverlay = () => {
   const { open } = useOverlay();
+
+  useEffect(() => {
+    console.log("SlashOverlay");
+  });
 
   const openFooConfirmDialog = () => {
     return open(({ isOpen, close }) => (
@@ -11,7 +16,6 @@ const SlashOverlay = () => {
         onClose={() => {
           close();
         }}
-        title="이거슨 Slash의 useOverlay입니당"
       />
     ));
   };

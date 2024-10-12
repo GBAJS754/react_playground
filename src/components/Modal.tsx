@@ -11,16 +11,6 @@ export function Modal({
   isOpen = false,
   onExit,
 }: PropsWithChildren<ModalProps>) {
-  const prevIsOpenRef = useRef(isOpen);
-
-  if (isOpen !== prevIsOpenRef.current) {
-    prevIsOpenRef.current = isOpen;
-
-    if (prevIsOpenRef.current === false) {
-      setTimeout(() => onExit?.(), 300);
-    }
-  }
-
   return (
     <AnimatePresence>
       {isOpen === true && (

@@ -4,7 +4,7 @@ interface DialogProps {
   isOpen: boolean;
   onClose: () => void;
   onExit?: () => void;
-  title: string;
+  title?: string;
   children?: React.ReactNode;
 }
 
@@ -13,7 +13,17 @@ const Dialog: React.FC<DialogProps> = ({
   onClose,
   title,
   children,
+  onExit,
 }) => {
+  const prevIsOpenRef = useRef(isOpen);
+
+  if (isOpen !== prevIsOpenRef.current) {
+    prevIsOpenRef.current = isOpen;
+
+    if (prevIsOpenRef.current === false) {
+      setTimeout(() => onExit?.(), 300);
+    }
+  }
   return (
     isOpen && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">

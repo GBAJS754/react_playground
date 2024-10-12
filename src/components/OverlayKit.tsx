@@ -1,9 +1,17 @@
-import { overlay } from "overlay-kit";
+import { overlay, useOverlayData } from "overlay-kit";
 
 import { Modal } from "./Modal";
 import Dialog from "./Dialog";
+import { useEffect } from "react";
 
 const OverlayKit = () => {
+  useEffect(() => {
+    console.log("OverlayKit");
+  });
+
+  const data = useOverlayData();
+  console.log(data);
+
   const openFooConfirmDialog = () => {
     return overlay.open(({ isOpen, close, unmount }) => (
       <Dialog
@@ -11,8 +19,6 @@ const OverlayKit = () => {
         onClose={() => {
           close();
         }}
-        onExit={unmount}
-        title="이거슨 overlay-kit의 모달입니당"
       />
     ));
   };
@@ -24,7 +30,7 @@ const OverlayKit = () => {
         onClick={() => {
           overlay.open(({ isOpen, close, unmount }) => {
             return (
-              <Modal isOpen={isOpen} onExit={unmount}>
+              <Modal isOpen={isOpen}>
                 <div
                   style={{
                     display: "flex",
