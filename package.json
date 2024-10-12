@@ -10,9 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.2.0",
+    "react": "^18.3.1",
     "react-dom": "^18.2.0",
-    "use-context-selector": "^1.1.2"
+    "scheduler": "^0.23.2",
+    "use-context-selector": "^1.4.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.64",
