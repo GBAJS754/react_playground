@@ -1,62 +1,36 @@
-import "./App.css";
-import React, { createContext, useContext, ReactNode } from "react";
-
-type Theme = "light" | "dark";
-
-const ThemeContext = createContext<Theme>("light");
-
-interface ThemeProviderProps {
-  theme: Theme;
-  children: ReactNode;
-}
-
-const ThemeProvider: React.FC<ThemeProviderProps> = ({ theme, children }) => {
-  return (
-    <div className={`theme-${theme}`}>
-      <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
-    </div>
-  );
-};
-
-const useTheme = () => {
-  const theme = useContext(ThemeContext);
-  if (!theme) {
-    throw new Error("useTheme must be used within a ThemeProvider");
-  }
-  return theme;
-};
-
-// Components
-const Body = () => {
-  const theme = useTheme();
-  return (
-    <div className="content">
-      <h1>메인 콘텐츠</h1>
-      <p>현재 테마: {theme}</p>
-    </div>
-  );
-};
-
-const Footer = () => {
-  const theme = useTheme();
-  return (
-    <footer className="footer">
-      <p>푸터 영역</p>
-      <p>현재 테마: {theme}</p>
-    </footer>
-  );
-};
+import AlertDialog from "./components/AlertDialog";
+import Dialog from "./components/Dialog";
 
 const App = () => {
   return (
-    <ThemeProvider theme="dark">
-      <Body />
-      <ThemeProvider theme="light">
-        <Footer />
-      </ThemeProvider>
-    </ThemeProvider>
+    <div>
+      <AlertDialog.Root>
+        <Dialog.Root>
+          <Dialog.Trigger />
+          <Dialog.Content>
+            <p>
+              🚨 아래의 Trigger는 AlertDialog를 열어야 하지만, 실제로는 가장
+              가까운 Dialog의 Context를 변경하게 됨.
+            </p>
+
+            <AlertDialog.Trigger />
+          </Dialog.Content>
+        </Dialog.Root>
+
+        <AlertDialog.Content>
+          <p>This is an alert dialog content.</p>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
+      {/* <AlertDialog.Root>
+        <AlertDialog.Trigger />
+        <AlertDialog.Content>hi</AlertDialog.Content>
+      </AlertDialog.Root>
+      <Dialog.Root>
+        <Dialog.Trigger />
+        <Dialog.Content>sdf</Dialog.Content>
+      </Dialog.Root> */}
+    </div>
   );
 };
 
-export { ThemeProvider, useTheme, type Theme };
 export default App;
